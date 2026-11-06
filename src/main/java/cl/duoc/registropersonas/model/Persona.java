@@ -1,11 +1,19 @@
 package cl.duoc.registropersonas.model;
 
+import cl.duoc.registropersonas.dao.PersonaJsonDAO;
+
+import java.io.IOException;
+import java.util.List;
+
 public class Persona {
     private String rut;
     private String nombre;
     private String apellido;
     private int edad;
 
+    public Persona() {
+
+    }
 
     public Persona(String rut, String nombre, String apellido, int edad) {
         this.setRut(rut);
@@ -56,5 +64,15 @@ public class Persona {
         sb.append(", edad=").append(edad);
         sb.append('}');
         return sb.toString();
+    }
+
+    public List<Persona> listar() throws IOException {
+        PersonaJsonDAO pjdao=new PersonaJsonDAO();
+        return pjdao.readAll();
+    }
+
+    public void guardar(Persona p) throws IOException {
+        PersonaJsonDAO pjdao=new PersonaJsonDAO();
+        pjdao.create(p);
     }
 }

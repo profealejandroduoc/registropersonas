@@ -10,13 +10,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonaController {
 
     private ObservableList<Persona> personas;//= FXCollections.observableArrayList();
-
+    private Persona model=new Persona();
     @FXML
     private Button btnguardar;
 
@@ -48,12 +49,14 @@ public class PersonaController {
     private TextField txtrut;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
+
+        List<Persona> people=model.listar();
+
         /*Datos de Prueba*/
-        List<Persona> people=new ArrayList<>();
-        Persona personasample=new Persona("100","Wacoldo","Soto",21);
-        people.add(personasample);
-        System.out.println("PEOPLE: " + people.size());
+//        Persona personasample=new Persona("100","Wacoldo","Soto",21);
+//        people.add(personasample);
+//        System.out.println("PEOPLE: " + people.size());
 
 
         /*INICIALIZAR*/
@@ -69,12 +72,13 @@ public class PersonaController {
     }
 
     @FXML
-    public void guardar(){
+    public void guardar() throws IOException {
         String rut=txtrut.getText();
         String nombre=txtnombre.getText();
         String apellido=txtapellido.getText();
         int edad=Integer.parseInt(txtedad.getText());
         Persona nueva=new Persona(rut,nombre,apellido,edad);
+        model.guardar(nueva);
         personas.add(nueva);
         limpiar();
     }
